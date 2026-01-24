@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
+import bcrypt from 'bcrypt'
+import { dbUserConnection } from "../config/db.config.js";
 
-
-const User = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
     fullName: {
         type: String,
         required: true,
@@ -26,3 +27,13 @@ const User = new mongoose.Schema({
     }
 
 }, { timestamps: true })
+
+
+UserSchema.pre('save', async function (next) {
+
+    if (!this.isModified('password')) return next
+    this.password = await bcrypt.hash(this.password, 10)
+    next
+})
+
+export const BlogUser = mongoose.model('BlogUser', UserSchema)
