@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import bcrypt from 'bcrypt'
-import { dbUserConnection } from "../config/db.config.js";
 
 const UserSchema = new mongoose.Schema({
     fullName: {
@@ -34,6 +33,18 @@ UserSchema.pre('save', async function (next) {
     if (!this.isModified('password')) return next
     this.password = await bcrypt.hash(this.password, 10)
     next
+})
+
+UserSchema.static('matchPassword', async function (email, password) {
+
+    const user = await this.findOne({ email })
+    if (!user) throw new Error("User not found")
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) throw new Error("Incorrect password")
+
+    return user;
+
 })
 
 export const BlogUser = mongoose.model('BlogUser', UserSchema)

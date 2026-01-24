@@ -7,5 +7,14 @@ export const handleUserSignup = async (req, res) => {
         email,
         password
     })
-    res.send("User Signup")
+    res.redirect('/login')
+
+}
+
+export const handleUserLogin = async (req, res) => {
+    const { email, password } = req.body
+
+    const isMatch = await BlogUser.matchPassword(email, password)
+
+    res.redirect('/')
 }
