@@ -8,7 +8,7 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    <a class="nav-link active" aria-current="page" href="/">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Blogs</a>
@@ -20,7 +20,8 @@
                             Ramiz <%= locals.user.fullName %>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                            <li><a class="dropdown-item" href="/addBlog">Add Blog</a></li>
+                            <li><a class="dropdown-item" href="/user/logout">Logout</a></li>
                         </ul>
                     </li>
                     <% } else {%>

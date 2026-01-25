@@ -2,6 +2,7 @@ import express from 'express'
 import path from 'path'
 import userRoutes from './src/routes/user.routes.js'
 import staticRoutes from './src/routes/static.routes.js'
+import blogRoutes from './src/routes/blog.routes.js'
 import { dbUserConnection } from './src/config/db.config.js'
 import dotenv from 'dotenv'
 import { Authentication } from './src/middlewares/auth.middlewares.js'
@@ -18,10 +19,12 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(express.urlencoded({ extended: false }))
 
-app.use('/', userRoutes)
+app.use('/user', userRoutes)
 app.use('/', staticRoutes)
 
-app.get('/', Authentication, (req, res) => {
+app.use(Authentication)
+app.use('/blog', blogRoutes)
+app.get('/', (req, res) => {
     res.render("home", {
         user: req.user
     })
