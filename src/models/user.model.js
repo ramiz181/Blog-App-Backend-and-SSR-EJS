@@ -14,10 +14,11 @@ const UserSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true,
+        select: false
     },
     profileImageURL: {
         type: String,
-        default: '',
+        default: './images/default.png',
     },
     role: {
         type: String,
@@ -28,23 +29,22 @@ const UserSchema = new mongoose.Schema({
 }, { timestamps: true })
 
 
-UserSchema.pre('save', async function (next) {
-
-    if (!this.isModified('password')) return next
+UserSchema.pre('save', async function () {
+    if (!this.isModified('password')) return
     this.password = await bcrypt.hash(this.password, 10)
-    next
+    return
 })
 
-UserSchema.static('matchPassword', async function (email, password) {
+UserSchema.static('AuthenticateUser', async function (email, password) {
 
-    const user = await this.findOne({ email })
+    const user = await this.findOne({ email }).select('+password')
     if (!user) throw new Error("User not found")
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) throw new Error("Incorrect password")
 
-    return user;
-
+    user.password = undefined
+    return user
 })
 
 export const BlogUser = mongoose.model('BlogUser', UserSchema)

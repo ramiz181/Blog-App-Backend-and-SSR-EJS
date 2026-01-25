@@ -1,4 +1,5 @@
 import { BlogUser } from "../models/user.model.js"
+import { generateToken } from "../services/auth.service.js"
 
 export const handleUserSignup = async (req, res) => {
     const { fullName, email, password } = req.body
@@ -7,14 +8,20 @@ export const handleUserSignup = async (req, res) => {
         email,
         password
     })
-    res.redirect('/login')
-
+    res.status(201).redirect('/login')
 }
 
 export const handleUserLogin = async (req, res) => {
     const { email, password } = req.body
-
-    const isMatch = await BlogUser.matchPassword(email, password)
-
-    res.redirect('/')
+    try {
+        const User = await BlogUser.AuthenticateUser(email, password)
+        // console.log("Controller user", User);
+        const token = generateToken(User)
+        return res.cookie('token', token).status(200).redirect('/')
+    } catch (error) {
+        console.log(error);
+        res.render('login', {
+            error
+        })
+    }
 }

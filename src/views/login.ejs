@@ -3,22 +3,31 @@
 
 <head>
     <%- include('./partials/head') %>
-        <title>SignuLoginp</title>
+        <title>Login</title>
 </head>
 
 <body>
-    <h1>Signup</h1>
-    <form action="/user/login" method="post" class="m-4">
-        <div class="mb-3">
-            <label for="email" class="form-label">Email address</label>
-            <input type="email" name="email" class="form-control" id="email">
-        </div>
-        <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
-            <input type="password" name="password" class="form-control" id="password">
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+    <div class="container m-4">
+        <h1>Login</h1>
+        <form action="/user/login" method="post" class="m-4">
+            <div class="mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <input type="email" name="email" class="form-control" id="email">
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" id="password">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+        <% if (locals.error) { %>
+            <div class="alert alert-danger" role="alert">
+                <%= error %>
+            </div>
+            <% } %>
+    </div>
+
     <%- include('./partials/scripts') %>
 </body>
 
