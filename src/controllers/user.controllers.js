@@ -19,9 +19,12 @@ export const handleUserLogin = async (req, res) => {
         const token = generateToken(User)
         return res.cookie('token', token).status(200).redirect('/')
     } catch (error) {
-        console.log(error);
-        res.render('login', {
+        // console.log(error);
+        res.status(401).render('login', {
             error
         })
     }
+}
+export const handleUserLogout = (req, res) => {
+    res.clearCookie('token').redirect('/login')
 }
