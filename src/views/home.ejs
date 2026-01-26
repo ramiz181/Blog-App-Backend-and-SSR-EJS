@@ -10,6 +10,23 @@
     <%- include('./partials/nav') %>
         <h1>@ramizwebdeveloper</h1>
 
+        <div class="container m-4">
+            <% allBlogs.forEach(blog=> { %>
+
+                <div class="card" style="width: 18rem;">
+                    <img src="<%= blog.coverImageURL %>" class="h-25 card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <%= blog.title %>
+                        </h5>
+                        <p class="card-text">
+                            <%= blog.description %>
+                        </p>
+                        <a href="/blog/<%= blog._id %>" class="btn btn-primary">Read More</a>
+                    </div>
+                </div>
+                <% }) %>
+        </div>
         <%- include('./partials/scripts') %>
 </body>
 
