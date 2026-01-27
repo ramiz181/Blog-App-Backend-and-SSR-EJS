@@ -9,15 +9,38 @@
 <body>
     <%- include('./partials/nav') %>
         <div class="container m-4">
-            <img src="<%= blog.coverImageURL %>" alt="">
+            <div class="bg-position-left bg-size-cover"
+                style="background-position: center center; height: 300px; background-image: url('<%= blog.coverImageURL %>');">
+            </div>
+            <img src="" alt="">
             <h3>
                 <%= blog.title %>
             </h3>
             <p>
                 <%= blog.description %>
             </p>
-        </div>
+            <div>
+                <img src="<%= blog.createdBy.profileImageURL%>" width="50px">
+                <!-- <h3> -->
+                <%= blog.createdBy.fullName%>
+                    <!-- </h3> -->
+            </div>
 
+            <% if (locals.user) { %>
+                <div>
+                    <form action="/blog/comment/<%= blog._id %>/" method="post" class="m-4">
+                        <div class="mb-3">
+                            <input type="text" name="comment" class="form-control" id="comment"
+                                placeholder="Enter your comment">
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </div>
+                    </form>
+                </div>
+                <% } %>
+                    <div class="container m-4">
+
+                    </div>
+        </div>
 </body>
 
 </html>

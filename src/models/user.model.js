@@ -18,7 +18,7 @@ const UserSchema = new mongoose.Schema({
     },
     profileImageURL: {
         type: String,
-        default: './images/default.png',
+        default: '/images/default.png',
     },
     role: {
         type: String,
@@ -28,21 +28,17 @@ const UserSchema = new mongoose.Schema({
 
 }, { timestamps: true })
 
-
 UserSchema.pre('save', async function () {
     if (!this.isModified('password')) return
     this.password = await bcrypt.hash(this.password, 10)
     return
 })
-
 UserSchema.static('AuthenticateUser', async function (email, password) {
 
     const user = await this.findOne({ email }).select('+password')
     if (!user) throw new Error("User not found")
-
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) throw new Error("Incorrect password")
-
     user.password = undefined
     return user
 })

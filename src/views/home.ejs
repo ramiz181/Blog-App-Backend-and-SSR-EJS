@@ -10,11 +10,11 @@
     <%- include('./partials/nav') %>
         <h1>@ramizwebdeveloper</h1>
 
-        <div class="container m-4">
+        <div class="container d-flex align-items-start gap-4 m-4">
             <% allBlogs.forEach(blog=> { %>
 
-                <div class="card" style="width: 18rem;">
-                    <img src="<%= blog.coverImageURL %>" class="h-25 card-img-top" alt="...">
+                <div class="card" style="width: 250px;">
+                    <img src="<%= blog.coverImageURL %>" style="height: 200px;" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">
                             <%= blog.title %>
