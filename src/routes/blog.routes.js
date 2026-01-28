@@ -4,10 +4,11 @@ import { upload } from '../middlewares/multer.middlewares.js'
 import { Blog } from '../models/blog.model.js'
 import { handleUserComment } from '../controllers/comment.controllers.js'
 import { Comment } from '../models/comment.model.js'
+import { Authentication } from '../middlewares/auth.middlewares.js'
 
 const router = express.Router()
 
-router.post('/addBlog', upload.single('coverImage'), handleAddBlog)
+router.post('/addBlog', Authentication, upload.single('coverImage'), handleAddBlog)
 
 router.get('/:id', async (req, res) => {
     const blog = await Blog.findById(req.params.id).populate('createdBy')
@@ -20,6 +21,6 @@ router.get('/:id', async (req, res) => {
     })
 })
 
-router.post('/comment/:blogID', handleUserComment)
+router.post('/comment/:blogID', Authentication, handleUserComment)
 
 export default router

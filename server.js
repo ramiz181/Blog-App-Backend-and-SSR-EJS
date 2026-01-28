@@ -5,7 +5,7 @@ import staticRoutes from './src/routes/static.routes.js'
 import blogRoutes from './src/routes/blog.routes.js'
 import { dbUserConnection } from './src/config/db.config.js'
 import dotenv from 'dotenv'
-import { Authentication } from './src/middlewares/auth.middlewares.js'
+import { optionalAuth } from './src/middlewares/auth.middlewares.js'
 import { Blog } from './src/models/blog.model.js'
 import cookieParser from 'cookie-parser'
 
@@ -25,7 +25,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use('/user', userRoutes)
 app.use('/', staticRoutes)
 
-app.use(Authentication)
+app.use(optionalAuth)
 app.use('/blog', blogRoutes)
 app.get('/', async (req, res) => {
 

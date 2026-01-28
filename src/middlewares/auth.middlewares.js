@@ -10,3 +10,13 @@ export const Authentication = (req, res, next) => {
     req.user = user
     next()
 }
+export const optionalAuth = (req, res, next) => {
+    const token = req.cookies?.token
+    if (token) {
+        const user = verifyToken(token)
+        if (user) {
+            req.user = user
+        }
+    }
+    next()
+}
