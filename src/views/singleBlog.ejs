@@ -19,15 +19,16 @@
             <p>
                 <%= blog.description %>
             </p>
-            <div>
-                <img src="<%= blog.createdBy.profileImageURL%>" width="50px">
-                <!-- <h3> -->
-                <%= blog.createdBy.fullName%>
-                    <!-- </h3> -->
-            </div>
 
             <% if (locals.user) { %>
                 <div>
+                    <img src="<%= blog.createdBy.profileImageURL%>" width="50px">
+                    <!-- <h3> -->
+                    <%= blog.createdBy.fullName%>
+                        <!-- </h3> -->
+                </div>
+                <div>
+                    <h2>Comments</h2>
                     <form action="/blog/comment/<%= blog._id %>/" method="post" class="m-4">
                         <div class="mb-3">
                             <input type="text" name="comment" class="form-control" id="comment"
@@ -38,7 +39,15 @@
                 </div>
                 <% } %>
                     <div class="container m-4">
-
+                        <% comments.forEach(comment=> { %>
+                            <div style="display: flex; align-items: center; gap:10px">
+                                <img src="<%= comment.createdBy.profileImageURL%>" width="40px">
+                                <h6>
+                                    <%= comment.createdBy.fullName %>
+                                </h6>
+                            </div>
+                            <pre><%= comment.comment %></pre>
+                            <% }) %>
                     </div>
         </div>
 </body>
