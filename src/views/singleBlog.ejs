@@ -20,13 +20,13 @@
                 <%= blog.description %>
             </p>
 
+            <div>
+                <img src="<%= blog.createdBy.profileImageURL%>" width="50px">
+                <!-- <h3> -->
+                <%= blog.createdBy.fullName%>
+                    <!-- </h3> -->
+            </div>
             <% if (locals.user) { %>
-                <div>
-                    <img src="<%= blog.createdBy.profileImageURL%>" width="50px">
-                    <!-- <h3> -->
-                    <%= blog.createdBy.fullName%>
-                        <!-- </h3> -->
-                </div>
                 <div>
                     <h2>Comments</h2>
                     <form action="/blog/comment/<%= blog._id %>/" method="post" class="m-4">
